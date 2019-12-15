@@ -1,0 +1,49 @@
+import random
+import functools
+names_array = ["Анастасия", "Анфиса", "Веселина", "Гаяна", "Гликерия", "Ираида", "Клариса", "Магдалина", "Матильда",
+               "Правдина", "Розалия", "Ростислава", "Степанида", "Сюзанна", "Аркадий", "Геннадий", "Денис", "Дмитрий",
+               "Константин", "Леонид"]
+
+
+def get_random_array(arr, cn):
+    random_array = []
+    random_array_len = len(arr) - 1
+    for i in range(0, cn):
+        random_array.insert(i, arr[random.randint(0, random_array_len)])
+    return random_array
+
+
+names_array_random = get_random_array(names_array, 100)
+
+for j in range(0, len(names_array_random)):
+    print(names_array_random[j])
+
+
+def get_often_name(arr):
+    dictionary = {}
+    for el in names_array:
+        dictionary[el] = len(list(filter(lambda x: x == el, arr)))
+    return dictionary
+
+
+names_dictionary = get_often_name(names_array_random)
+print(names_dictionary.items())
+
+
+def get_seldom_letter(arr):
+    letters_dictionary = {}
+    for el in names_array:
+        letters_dictionary[el[0]] = len(list(filter(lambda x: x[0] == el[0], arr)))
+
+    print(letters_dictionary.items())
+    min_letter = functools.reduce(lambda a, b: a if a < b else b, letters_dictionary.values())
+
+    list_of_keys = [key for (key, value) in letters_dictionary.items() if value == min_letter]
+
+    return list_of_keys
+
+
+seldom_letters = get_seldom_letter(names_array_random)
+for i in range(0, len(seldom_letters)):
+    print(seldom_letters[i])
+
